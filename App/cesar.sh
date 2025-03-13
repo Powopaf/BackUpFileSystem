@@ -10,10 +10,12 @@ key=$2
 
 ext=${file##*.}
 
-if [[ $ext -eq "cesar" ]]; then
+if [[ "$ext" = "cesar" ]]; then
     echo "Decrypting..."
-    python3 ../Encryption/cesar.py decrypt $file $key
+    echo "Running: python3 Encryption/cesar.py decrypt \"$file\" \"$key\""
+    python3 Encryption/cesar.py decrypt "$file" "$key"
 else
     echo "Encrypting..."
-    python3 ../Encryption/cesar.py encrypt $file $key
+    echo "Running: python3 Encryption/cesar.py encrypt \"$file\" \"$key\""
+    python3 Encryption/cesar.py encrypt "$file" "$key"
 fi

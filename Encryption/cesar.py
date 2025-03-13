@@ -1,4 +1,8 @@
 import sys
+import string
+
+def change_name(name: str) -> str:
+    return name.rsplit(".", 1)[0]
 
 def key_int(key="../key") -> int:
     k = open(key, 'r')
@@ -46,9 +50,9 @@ def encrypt(file: str, key: int) -> None:
     doc.close()
     new.close()
 
-def decrypt(file: str, key: int, name: str) -> None:
+def decrypt(file: str, key: int) -> None:
     doc = open(file, 'r')
-    new = open(name, 'w')
+    new = open(change_name(file), 'w')
     line: str = doc.readline()
     while line:
         for char in line:
@@ -67,11 +71,11 @@ if __name__ == '__main__':
     arg3 = sys.argv[3]
 
     if arg1 == "encrypt":
-        encrypt(arg2, key_int())
+        encrypt(arg2, key_int(arg3))
         sys.exit(0)
     
     elif arg1 == "decrypt":
-        decrypt(arg2, key_int(), arg3)
+        decrypt(arg2, key_int(arg3))
         sys.exit(0)
 
     else:
