@@ -1,3 +1,5 @@
+import sys
+
 def key_int(key="../key") -> int:
     k = open(key, 'r')
     key = k.readline()
@@ -60,6 +62,21 @@ def decrypt(file: str, key: int, name: str) -> None:
     new.close()
 
 if __name__ == '__main__':
-    encrypt("../key", key_int())
-    decrypt("../key.cesar", key_int(), "../key.decrypt")
+    arg1 = sys.argv[1]
+    arg2 = sys.argv[2]
+    arg3 = sys.argv[3]
+
+    if arg1 == "encrypt":
+        encrypt(arg2, key_int())
+        sys.exit(0)
+    
+    elif arg1 == "decrypt":
+        decrypt(arg2, key_int(), arg3)
+        sys.exit(0)
+
+    else:
+        print("Invalid command")
+        sys.exit(1)
+
+
 
