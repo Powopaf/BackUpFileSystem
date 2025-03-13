@@ -1,3 +1,6 @@
+*.cesar
+*.decrypt
+
 # Prerequisites
 *.d
 
