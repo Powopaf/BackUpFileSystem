@@ -6,7 +6,7 @@ SHARE_DIR="/usr/local/share/$SCRIPT_NAME"
 SCRIPT_FILE="App/cesar.sh"
 PYTHON_FILE="Encryption/cesar.py"
 
-# Check if script is run as root
+# Ensure script runs as root
 if [[ $EUID -ne 0 ]]; then
     echo "Please run as root: sudo ./install.sh" >&2
     exit 1
@@ -18,19 +18,21 @@ if ! command -v python3 &>/dev/null; then
     exit 1
 fi
 
-# Create the shared directory
+# Create directory for Python script
 mkdir -p "$SHARE_DIR"
 
-# Move scripts to the appropriate locations
+# Copy Python script
+cp "$PYTHON_FILE" "$SHARE_DIR/cesar.py"
+
+# Copy main shell script
 cp "$SCRIPT_FILE" "$INSTALL_DIR/$SCRIPT_NAME"
-cp "$PYTHON_FILE" "$SHARE_DIR/"
 
 # Make the script executable
 chmod +x "$INSTALL_DIR/$SCRIPT_NAME"
 
-# Update cesar.sh to point to the new Python script location
-sed -i "s|SCRIPT_DIR=.*|SCRIPT_DIR=\"$SHARE_DIR\"|" "$INSTALL_DIR/$SCRIPT_NAME"
+# Update cesar.sh to use the correct path to cesar.py
+sed -i "s|PYTHON_SCRIPT=.*|PYTHON_SCRIPT=\"$SHARE_DIR/cesar.py\"|" "$INSTALL_DIR/$SCRIPT_NAME"
 
 echo "$SCRIPT_NAME installed successfully!"
-echo "You can now use it by running: $SCRIPT_NAME"
+echo "You can now use it by running: $SCRIPT_NAME <file> <key>"
 
